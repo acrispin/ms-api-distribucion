@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="springAppName">${bundle:application:spring.application.name}</Property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="RollingFile" fileName="./logs/${springAppName}.log"
+                     filePattern="./logs/${springAppName}-%i.log">
+            <PatternLayout pattern="%p [%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-B3-ParentSpanId},%X{X-Span-Export}] [%d{yyyyMMdd HH:mm:ss.SSS}] - %-12C{} -%L - %m%n" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="4 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="9"/>
+        </RollingFile>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%p [${springAppName},%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-Span-Export}] [%d{yyyyMMdd HH:mm:ss.SSS}] - %-12C{1} -%L - %m%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.apache.ibatis" level="error" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.apache.ibatis.logging.jdbc" level="error" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="java.sql" level="error" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.springframework.boot" level="info" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.springframework.test.context" level="info" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.springframework.beans.factory.support" level="info" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.apache.http" level="error" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.hibernate.validator" level="error" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="com.netflix.discovery" level="error" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="INFO">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

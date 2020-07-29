@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="autoMappingBehavior" value="FULL"/>
+        <setting name="defaultExecutorType" value="SIMPLE"/>
+        <setting name="defaultStatementTimeout" value="300"/>
+        <setting name="jdbcTypeForNull" value="NULL"/>
+        <setting name="logImpl" value="LOG4J2"/>
+        <setting name="multipleResultSetsEnabled" value="true"/>
+    </settings>
+
+    <environments default="default">
+        <environment id="pooled">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+                <property name="poolMaximumActiveConnections" value="100"/>
+                <property name="poolMaximumIdleConnections" value="10"/>
+                <property name="poolMaximumCheckoutTime" value="120000"/>
+                <property name="poolTimeToWait" value="60000"/>
+                <property name="poolPingQuery" value="select 1;"/>
+                <property name="poolPingEnabled" value="false"/>
+                <property name="poolPingConnectionsNotUsedFor" value="0"/>
+            </dataSource>
+        </environment>
+        <environment id="unpooled">
+            <transactionManager type="JDBC"/>
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper class="com.dsb.api.commons.db.dao.mapper.AppMapper"/>
+        <mapper resource="mybatis/distribucion/mapper/Ruteo.xml" />
+    </mappers>
+</configuration>
