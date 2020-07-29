@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Data
 public class Ruteo implements Serializable {
 
-    private static final long serialVersionUID = 8878020162588669011L;
+    private static final long serialVersionUID = 1048362679758585750L;
 
     protected String correo;
     protected String clave;
