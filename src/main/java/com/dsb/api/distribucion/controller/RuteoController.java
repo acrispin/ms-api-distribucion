@@ -23,6 +23,5 @@ public class RuteoController {
             @RequestBody Ruteo ruteo, HttpServletRequest request) {
         return null;
     }
-
-
+    
 }
