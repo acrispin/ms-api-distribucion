@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dsb.api.distribucion.mapper.IUnidadTransporteMapper">
+
+    <resultMap id="resultSaveUnidadTransporte" type="com.dsb.api.commons.domain.response.ResponseBase">
+        <result property="id" column="p_id"/>
+        <result property="mensaje" column="p_msg"/>
+        <result property="error" column="p_error"/>
+    </resultMap>
+
+    <select id="insertUnidadTransporte"
+            parameterType="java.util.Map"
+            resultMap="resultSaveUnidadTransporte">
+        CALL transporte.sp_insertar_unidad_transporte(#{json}::JSONB, #{usuario});
+    </select>
+
+    <select id="updateUnidadTransporte"
+            parameterType="java.util.Map"
+            resultMap="resultSaveUnidadTransporte">
+        CALL transporte.sp_actualizar_unidad_transporte(#{json}::JSONB, #{usuario});
+    </select>
+
+</mapper>

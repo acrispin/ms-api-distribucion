@@ -43,5 +43,6 @@
     <mappers>
         <mapper class="com.dsb.api.commons.db.dao.mapper.AppMapper"/>
         <mapper resource="mybatis/distribucion/mapper/Ruteo.xml" />
+        <mapper resource="mybatis/distribucion/mapper/UnidadTransporte.xml" />
     </mappers>
 </configuration>
