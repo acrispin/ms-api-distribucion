@@ -20,4 +20,191 @@
         CALL transporte.sp_actualizar_unidad_transporte(#{json}::JSONB, #{usuario});
     </select>
 
+    <resultMap id="selectByIdMap" type="com.dsb.api.distribucion.domain.UnidadTransporte">
+        <result property="id" column="id"/>
+        <result property="placa" column="placa"/>
+        <result property="idTipoUnidad" column="idTipoUnidad"/>
+        <result property="activo" column="activo"/>
+        <result property="marca" column="marca"/>
+        <result property="modelo" column="modelo"/>
+        <result property="esUnidadBpdyt" column="esUnidadBpdyt"/>
+        <result property="esRackInterno" column="esRackInterno"/>
+        <result property="tonelajeNeto" column="tonelajeNeto"/>
+        <result property="volumenNeto" column="volumenNeto"/>
+        <result property="tonelajeBruto" column="tonelajeBruto"/>
+        <result property="volumenBruto" column="volumenBruto"/>
+        <result property="ejes" column="ejes"/>
+        <result property="altura" column="altura"/>
+        <result property="anio" column="anio"/>
+        <result property="color" column="color"/>
+        <result property="serie" column="serie"/>
+        <result property="esPropio" column="esPropio"/>
+        <result property="soat" column="soat"/>
+        <result property="esPermisoMtc" column="esPermisoMtc"/>
+        <result property="esRevisionTecnica" column="esRevisionTecnica"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="selectByIdMap">
+        SELECT ut.id_unidad_transporte AS "id",
+               ut.placa AS "placa",
+               ut.id_tipo_unidad AS "idTipoUnidad",
+               ut.activo AS "activo",
+               ut.marca AS "marca",
+               ut.modelo AS "modelo",
+               ut.es_unidad_bpdyt AS "esUnidadBpdyt",
+               ut.es_rack_interno AS "esRackInterno",
+               ut.tonelaje_neto AS "tonelajeNeto",
+               ut.volumen_neto AS "volumenNeto",
+               ut.tonelaje_bruto AS "tonelajeBruto",
+               ut.volumen_bruto AS "volumenBruto",
+               ut.ejes AS "ejes",
+               ut.altura AS "altura",
+               ut.anio AS "anio",
+               ut.color AS "color",
+               ut.serie AS "serie",
+               ut.es_propio AS "esPropio",
+               ut.soat AS "soat",
+               ut.es_permiso_mtc AS "esPermisoMtc",
+               ut.es_revision_tecnica AS "esRevisionTecnica"
+        FROM public.unidad_transporte ut
+        WHERE ut.id_unidad_transporte = #{id}
+        ;
+    </select>
+
+    <resultMap id="selectProveedoresByUtMap" type="com.dsb.api.distribucion.domain.ProveedoresItem">
+        <id property="id" column="id"/>
+        <result property="nombre" column="nombre"/>
+        <result property="esCertificacionBpdyt" column="esCertificacionBpdyt"/>
+        <result property="activo" column="activo"/>
+        <result property="descripcion" column="descripcion"/>
+        <result property="idUnidadTransporte" column="idUnidadTransporte"/>
+        <collection property="modalidades" ofType="com.dsb.api.distribucion.domain.ModalidadesItem" javaType="ArrayList"  >
+            <id property="id" column="id_modalidad" />
+            <result property="idTipoModalidadServicio" column="idTipoModalidadServicio_modalidad"/>
+            <result property="costo" column="costo_modalidad"/>
+            <result property="idProveedorUnidadTransporte" column="idProveedorUnidadTransporte_modalidad"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectProveedoresByUt" resultMap="selectProveedoresByUtMap">
+        SELECT ut_pro.id_proveedor_unidad_transporte AS "id",
+               ut_pro.nombre AS "nombre",
+               ut_pro.es_certificacion_bpdyt AS "esCertificacionBpdyt",
+               ut_pro.activo AS "activo",
+               ut_pro.descripcion AS "descripcion",
+               ut_pro.id_unidad_transporte AS "idUnidadTransporte",
+               pro_mod.id_modalidad_servicio AS "id_modalidad",
+               pro_mod.id_tipo_modalidad_servicio AS "idTipoModalidadServicio_modalidad",
+               pro_mod.costo AS "costo_modalidad",
+               pro_mod.id_proveedor_unidad_transporte AS "idProveedorUnidadTransporte_modalidad"
+        FROM public.proveedor_unidad_transporte ut_pro
+        JOIN public.unidad_transporte ut ON ut_pro.id_unidad_transporte = ut.id_unidad_transporte
+        JOIN public.modalidad_servicio pro_mod ON pro_mod.id_proveedor_unidad_transporte = ut_pro.id_proveedor_unidad_transporte
+        WHERE ut.id_unidad_transporte = #{idUt}
+        ;
+    </select>
+
+    <resultMap id="selectRacksByUtMap" type="com.dsb.api.distribucion.domain.RacksItem">
+        <id property="id" column="id"/>
+        <result property="codigo" column="codigo"/>
+        <result property="activo" column="activo"/>
+        <result property="alto" column="alto"/>
+        <result property="ancho" column="ancho"/>
+        <result property="profundidad" column="profundidad"/>
+        <result property="volumen" column="volumen"/>
+        <result property="idUnidadTransporte" column="idUnidadTransporte"/>
+        <collection property="columas" ofType="com.dsb.api.distribucion.domain.ColumasItem" javaType="ArrayList"  >
+            <id property="id" column="id_col" />
+            <id property="idRack" column="idRack_col"/>
+            <result property="ancho" column="ancho_col"/>
+            <result property="index" column="index_col"/>
+        </collection>
+        <collection property="niveles" ofType="com.dsb.api.distribucion.domain.NivelesItem" javaType="ArrayList"  >
+            <id property="id" column="id_niv" />
+            <id property="idRack" column="idRack_niv"/>
+            <result property="alto" column="alto_niv"/>
+            <result property="esDivision" column="esDivision_niv"/>
+            <result property="index" column="index_niv"/>
+        </collection>
+        <collection property="nichos" ofType="com.dsb.api.distribucion.domain.NichosItem" javaType="ArrayList"  >
+            <id property="id" column="id_nic" />
+            <result property="activo" column="activo_nic"/>
+            <result property="nivel" column="nivel_nic"/>
+            <result property="columna" column="columna_nic"/>
+            <result property="nroColumnas" column="nroColumnas_nic"/>
+            <result property="nroNiveles" column="nroNiveles_nic"/>
+            <result property="alto" column="alto_nic"/>
+            <result property="ancho" column="ancho_nic"/>
+            <result property="profundidad" column="profundidad_nic"/>
+            <result property="idRack" column="idRack_nic"/>
+            <collection property="ubicaciones" ofType="com.dsb.api.distribucion.domain.UbicacionesItem" javaType="ArrayList"  >
+                <id property="id" column="id_ubi" />
+                <result property="alto" column="alto_ubi" />
+                <result property="ancho" column="ancho_ubi" />
+                <result property="profundidad" column="profundidad_ubi" />
+                <result property="codigo" column="codigo_ubi" />
+                <result property="nivel" column="nivel_ubi" />
+                <result property="columna" column="columna_ubi" />
+                <result property="idNicho" column="idNicho_ubi" />
+                <result property="idRack" column="idRack_ubi" />
+                <result property="idUnidadTransporte" column="idUnidadTransporte_ubi" />
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="selectRacksByUt" resultMap="selectRacksByUtMap">
+        SELECT ut_rack.id AS "id",
+               ut_rack.codigo AS "codigo",
+               ut_rack.activo AS "activo",
+               ut_rack.alto AS "alto",
+               ut_rack.ancho AS "ancho",
+               ut_rack.profundidad AS "profundidad",
+               ut_rack.volumen AS "volumen",
+               ut_rack.id_unidad_transporte AS "idUnidadTransporte"
+               ,
+               rack_col.id AS "id_col",
+               rack_col.id_rack AS "idRack_col",
+               rack_col.ancho AS "ancho_col",
+               rack_col.index AS "index_col"
+               ,
+               rack_niv.id AS "id_niv",
+               rack_niv.id_rack AS "idRack_niv",
+               rack_niv.alto AS "alto_niv",
+               rack_niv.es_division AS "esDivision_niv",
+               rack_niv.index AS "index_niv"
+               ,
+               rack_nic.id AS "id_nic",
+               rack_nic.activo AS "activo_nic",
+               rack_nic.nivel AS "nivel_nic",
+               rack_nic.columna AS "columna_nic",
+               rack_nic.nro_columnas AS "nroColumnas_nic",
+               rack_nic.nro_niveles AS "nroNiveles_nic",
+               rack_nic.alto AS "alto_nic",
+               rack_nic.ancho AS "ancho_nic",
+               rack_nic.profundidad AS "profundidad_nic",
+               rack_nic.id_rack AS "idRack_nic"
+               ,
+               ubi.id AS "id_ubi",
+               ubi.alto AS "alto_ubi",
+               ubi.ancho AS "ancho_ubi",
+               ubi.profundidad AS "profundidad_ubi",
+               ubi.codigo AS "codigo_ubi",
+               ubi.nivel AS "nivel_ubi",
+               ubi.columna AS "columna_ubi",
+               ubi.id_nicho AS "idNicho_ubi",
+               ubi.id_rack AS "idRack_ubi",
+               ubi.id_unidad_transporte AS "idUnidadTransporte_ubi"
+        FROM transporte.rack ut_rack
+        JOIN public.unidad_transporte ut ON ut_rack.id_unidad_transporte = ut.id_unidad_transporte
+        JOIN transporte.rack_columna rack_col ON ut_rack.id = rack_col.id_rack
+        JOIN transporte.rack_nivel rack_niv ON ut_rack.id = rack_niv.id_rack
+        JOIN transporte.rack_nicho rack_nic
+            ON ut_rack.id = rack_nic.id_rack
+            AND rack_niv.id = rack_nic.nivel
+            AND rack_col.id = rack_nic.columna
+        JOIN transporte.ubicacion ubi ON rack_nic.id = ubi.id_nicho
+        WHERE ut.id_unidad_transporte = #{idUt}
+        ;
+    </select>
+
 </mapper>
