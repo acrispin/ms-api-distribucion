@@ -16,6 +16,9 @@ public class NichosItem implements Serializable {
     protected String nivel;
     protected int nroNiveles;
     protected boolean activo;
+    protected double alto;
+    protected double ancho;
+    protected double profundidad;
     protected List<UbicacionesItem> ubicaciones;
 
 }

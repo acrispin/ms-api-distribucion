@@ -14,4 +14,8 @@ public class UbicacionesItem implements Serializable {
     protected double alto;
     protected String idNicho;
     protected int idUnidadTransporte;
+    protected String codigo;
+    protected String nivel;
+    protected String columna;
+    protected double profundidad;
 }

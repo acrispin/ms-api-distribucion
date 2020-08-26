@@ -11,4 +11,5 @@ public class ColumasItem implements Serializable {
     protected int idRack;
     protected double ancho;
     protected String id;
+    protected int index;
 }

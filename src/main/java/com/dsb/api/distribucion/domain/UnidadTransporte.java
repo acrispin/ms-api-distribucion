@@ -31,6 +31,7 @@ public class UnidadTransporte implements Serializable {
     protected int anio;
     protected String placa;
     protected boolean activo;
+    protected String ip;
     protected List<ProveedoresItem> proveedores;
     protected List<RacksItem> racks;
 

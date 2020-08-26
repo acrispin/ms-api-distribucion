@@ -6,10 +6,12 @@ import com.dsb.api.distribucion.domain.UnidadTransporte;
 public interface IUnidadTransporteService {
 
     ResponseBase crearUnidadTransporte(
-            UnidadTransporte unidad
+            UnidadTransporte unidad,
+            String ip
     );
 
     ResponseBase actualizarUnidadTransporte(
-            UnidadTransporte unidad
+            UnidadTransporte unidad,
+            String ip
     );
 }

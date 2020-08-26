@@ -12,4 +12,5 @@ public class NivelesItem implements Serializable {
     protected int idRack;
     protected String id;
     protected double alto;
+    protected int index;
 }

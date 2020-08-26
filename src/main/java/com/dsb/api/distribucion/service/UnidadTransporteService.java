@@ -18,9 +18,10 @@ public class UnidadTransporteService implements IUnidadTransporteService {
     private Tracer tracer;
 
     @Override
-    public ResponseBase crearUnidadTransporte(UnidadTransporte unidad) {
+    public ResponseBase crearUnidadTransporte(UnidadTransporte unidad, String ip) {
         ResponseBase response = new ResponseBase();
         try {
+            unidad.setIp(ip);
             String json = new JsonUtil().getJsonFromObjet(unidad);
             if (log.isDebugEnabled()) {
                 log.debug("crearUnidadTransporte INI");
@@ -44,9 +45,13 @@ public class UnidadTransporteService implements IUnidadTransporteService {
     }
 
     @Override
-    public ResponseBase actualizarUnidadTransporte(UnidadTransporte unidad) {
+    public ResponseBase actualizarUnidadTransporte(UnidadTransporte unidad, String ip) {
         ResponseBase response = new ResponseBase();
         try {
+            if (unidad.getId() <= 0) {
+                throw new IllegalArgumentException("Error en identificador de unidad de transporte.");
+            }
+            unidad.setIp(ip);
             String json = new JsonUtil().getJsonFromObjet(unidad);
             if (log.isDebugEnabled()) {
                 log.debug("actualizarUnidadTransporte INI");

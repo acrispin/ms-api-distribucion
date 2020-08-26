@@ -22,13 +22,13 @@ public class UnidadTransporteController {
     @PostMapping("")
     public ResponseBase crearUnidadTransporte(
             @RequestBody UnidadTransporte unidad, HttpServletRequest request) {
-        return unidadTransporteService.crearUnidadTransporte(unidad);
+        return unidadTransporteService.crearUnidadTransporte(unidad, request.getRemoteAddr());
     }
 
     @PutMapping("")
     public ResponseBase actualizarUnidadTransporte(
             @RequestBody UnidadTransporte unidad, HttpServletRequest request) {
-        return unidadTransporteService.actualizarUnidadTransporte(unidad);
+        return unidadTransporteService.actualizarUnidadTransporte(unidad, request.getRemoteAddr());
     }
 
 }
