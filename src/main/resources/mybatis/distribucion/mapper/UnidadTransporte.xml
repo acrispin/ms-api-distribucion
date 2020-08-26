@@ -200,8 +200,8 @@
         JOIN transporte.rack_nivel rack_niv ON ut_rack.id = rack_niv.id_rack
         JOIN transporte.rack_nicho rack_nic
             ON ut_rack.id = rack_nic.id_rack
-            AND rack_niv.id = rack_nic.nivel
-            AND rack_col.id = rack_nic.columna
+            AND rack_niv.index::VARCHAR = rack_nic.nivel
+            AND rack_col.index::VARCHAR = rack_nic.columna
         JOIN transporte.ubicacion ubi ON rack_nic.id = ubi.id_nicho
         WHERE ut.id_unidad_transporte = #{idUt}
         ;
