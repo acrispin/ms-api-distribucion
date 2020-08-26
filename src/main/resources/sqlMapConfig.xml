@@ -24,9 +24,9 @@
                 <property name="poolMaximumIdleConnections" value="10"/>
                 <property name="poolMaximumCheckoutTime" value="120000"/>
                 <property name="poolTimeToWait" value="60000"/>
-                <property name="poolPingQuery" value="select 1;"/>
-                <property name="poolPingEnabled" value="false"/>
-                <property name="poolPingConnectionsNotUsedFor" value="0"/>
+                <property name="poolPingQuery" value="/* ping */ SELECT 1"/>
+                <property name="poolPingEnabled" value="true"/>
+                <property name="poolPingConnectionsNotUsedFor" value="3600000"/>
             </dataSource>
         </environment>
         <environment id="unpooled">
